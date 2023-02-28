@@ -10,6 +10,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
+    "example": "rollup -c rollup.example.config.js",
     "typecheck": "tsc --noEmit",
     "test": "npm run test:unit && npm run build",
     "test:unit": "jest"
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-terser": "^0.4.0",
     "@rollup/plugin-typescript": "^11.0.0",
     "@testing-library/jest-dom": "^5.16.5",
@@ -61,6 +63,7 @@
     "rollup-plugin-dts": "^5.2.0",
     "rollup-plugin-import-css": "^3.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-serve": "^2.0.2",
     "ts-jest": "^29.0.5",
     "tslib": "^2.5.0",
     "typescript": "^4.9.5"
