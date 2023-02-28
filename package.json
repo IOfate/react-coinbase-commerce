@@ -1,0 +1,58 @@
+{
+  "name": "@iofate/react-coinbase-commerce",
+  "version": "1.0.0",
+  "description": "A react component to easily embed a Coinbase Commerce Checkout within your application",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run typecheck && npm run build"
+  },
+  "keywords": [
+    "react",
+    "cryptocurrency",
+    "coinbase",
+    "commerce",
+    "bitcoin",
+    "litecoin",
+    "dogecoin",
+    "ethereum",
+    "iofate",
+    "whalinvest"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IOfate/react-coinbase-commerce.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IOfate/react-coinbase-commerce/issues"
+  },
+  "author": "IOfate",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/react": "^18.0.28",
+    "react": "^18.2.0",
+    "rollup": "^3.17.3",
+    "rollup-plugin-dts": "^5.2.0",
+    "rollup-plugin-import-css": "^3.1.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  }
+}
