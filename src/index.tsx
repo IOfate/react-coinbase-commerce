@@ -10,21 +10,18 @@ import './css/button.css';
 import { Iframe } from './iframe';
 
 type Props = {
-  children?: ReactNode,
+  styled?: boolean;
   checkoutId?: string,
   chargeId?: string,
   customMetadata?: string,
-  onLoad: () => void,
+  onLoad?: () => void,
   onChargeSuccess?: (data: MessageData) => void,
   onChargeFailure?: (data: MessageData) => void,
   onPaymentDetected?: (data: MessageData) => void,
   onModalClosed?: () => void,
-  disableCaching: boolean,
+  disableCaching?: boolean,
   wrapperStyle?: { [key: string]: number | string },
-  btnProps: {
-    styled: boolean;
-  } & ButtonHTMLAttributes<any>,
-};
+} & ButtonHTMLAttributes<any>;
 
 type State = {
   showModal: boolean
@@ -39,11 +36,11 @@ export class CoinbaseCommerceButton extends Component<Props, State> {
     };
   }
 
-  onClick() {
+  private onClick() {
     this.setState({ showModal: true });
   }
 
-  onModalClose() {
+  private onModalClose() {
     const { onModalClosed } = this.props;
 
     this.setState({ showModal: false });
@@ -52,14 +49,40 @@ export class CoinbaseCommerceButton extends Component<Props, State> {
     }
   }
 
-  handleError(data: MessageData) {
+  private handleError(data: MessageData) {
     console.error(data);
     this.onModalClose();
   }
 
+  private getButtonProps(): Partial<Props> {
+    const ignoredProps = [
+      'onLoad',
+      'onChargeSuccess',
+      'onChargeFailure',
+      'customMetadata',
+      'onPaymentDetected',
+      'onModalClosed',
+      'checkoutId',
+      'chargeId',
+      'disableCaching',
+      'wrapperStyle'
+    ];
+
+    return Object.keys({ ...this.props })
+      .filter((key: string) => !ignoredProps.includes(key))
+      .reduce(
+        (result: Partial<Props>, key: string) => ({
+          ...result,
+          [key]: (this.props as any)[key],
+        }),
+        {} as Partial<Props>,
+      );
+  };
+
   render(): JSX.Element {
     const { showModal } = this.state;
     const {
+      styled,
       onLoad,
       onChargeSuccess,
       onChargeFailure,
@@ -69,7 +92,8 @@ export class CoinbaseCommerceButton extends Component<Props, State> {
       onPaymentDetected,
       disableCaching,
       wrapperStyle,
-      btnProps,
+      className,
+      children,
     } = this.props;
     const iFrameProps = {
       onLoad,
@@ -80,6 +104,7 @@ export class CoinbaseCommerceButton extends Component<Props, State> {
       onPaymentDetected,
       disableCaching,
     };
+    const btnProps = this.getButtonProps();
 
     return (
       <div style={wrapperStyle}>
@@ -91,10 +116,10 @@ export class CoinbaseCommerceButton extends Component<Props, State> {
         >
           <button
             {...btnProps}
-            className={ btnProps.styled ? 'coinbase-commerce-button' : btnProps.className }
+            className={ styled ? 'coinbase-commerce-button' : className }
             onClick={() => this.onClick()}
           >
-            { btnProps.children || 'Buy crypto' }
+            { children || 'Buy crypto' }
           </button>
         </a>
         {showModal && (

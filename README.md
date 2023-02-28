@@ -37,11 +37,11 @@ account [here](https://commerce.coinbase.com).
 ## Docs
 
 ### Props
-In addition to the regular `button` props (must be passed to `btnProps`), this component accepts some custom props:
+In addition to the regular `button` props, this component accepts some custom props:
 
 | Prop Name       | default | required              | type                  |
 |-----------------|---------|-----------------------|-----------------------|
-| `btnProps.styled`        | false   | no                    | ``boolean``               |
+| `styled`        | false   | no                    | ``boolean``               |
 | `checkoutId`      | null     | If no chargeId, yes   | ``string``                |
 | `chargeId`        | null     | If no checkoutId, yes | ``string``                |
 | `onLoad`          | null     | no                    | `()=>void`            |

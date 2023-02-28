@@ -11,13 +11,13 @@ type Props = {
   checkoutId?: string,
   chargeId?: string,
   customMetadata?: string,
-  onLoad: () => void,
+  onLoad?: () => void,
   onChargeSuccess?: (data: MessageData) => void,
   onChargeFailure?: (data: MessageData) => void,
   onPaymentDetected?: (data: MessageData) => void,
   onError: (data: MessageData) => void,
   onModalClose: () => void,
-  disableCaching: boolean,
+  disableCaching?: boolean,
 };
 
 type State = {
@@ -124,7 +124,7 @@ export class Iframe extends Component<Props, State> {
     const params: SrcParams = {
       origin: hostName,
       buttonId: this.uuid,
-      cacheDisabled: disableCaching
+      cacheDisabled: !!disableCaching
     };
 
     let custom = '';
