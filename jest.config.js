@@ -11,6 +11,6 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   moduleNameMapper: {
-    '\\.(css|less)$': '<rootDir>/jest-mocks/styleMock.js',
+    '\\.(css|less)$': 'identity-obj-proxy',
   },
 };

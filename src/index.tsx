@@ -9,25 +9,30 @@ import './css/button.css';
 /** Root */
 import { Iframe } from './iframe';
 
-type Props = {
-  styled?: boolean;
-  checkoutId?: string,
-  chargeId?: string,
-  customMetadata?: string,
-  onLoad?: () => void,
-  onChargeSuccess?: (data: MessageData) => void,
-  onChargeFailure?: (data: MessageData) => void,
-  onPaymentDetected?: (data: MessageData) => void,
-  onModalClosed?: () => void,
-  disableCaching?: boolean,
-  wrapperStyle?: { [key: string]: number | string },
-} & ButtonHTMLAttributes<any>;
+interface Props {
+  styled: boolean;
+  checkoutId?: string;
+  chargeId?: string;
+  customMetadata?: string;
+  onLoad?: () => void;
+  onChargeSuccess?: (data: MessageData) => void;
+  onChargeFailure?: (data: MessageData) => void;
+  onPaymentDetected?: (data: MessageData) => void;
+  onModalClosed?: () => void;
+  disableCaching: boolean;
+  wrapperStyle?: { [key: string]: number | string };
+}
 
 type State = {
   showModal: boolean
 };
 
-export class CoinbaseCommerceButton extends Component<Props, State> {
+export class CoinbaseCommerceButton extends Component<Props & ButtonHTMLAttributes<any>, State> {
+  static defaultProps = {
+    styled: false,
+    disableCaching: false,
+  };
+
   constructor(props: Props) {
     super(props);
 
