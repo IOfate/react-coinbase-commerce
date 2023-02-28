@@ -19,7 +19,7 @@ type Props = {
   onChargeFailure?: (data: MessageData) => void,
   onPaymentDetected?: (data: MessageData) => void,
   onModalClosed?: () => void,
-  disableCaching: true,
+  disableCaching: boolean,
   wrapperStyle?: { [key: string]: number | string },
   btnProps: {
     styled: boolean;
