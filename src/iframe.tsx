@@ -1,82 +1,82 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 /** Models */
-import { MessageData } from './models/message-data.model';
+import { type MessageData } from './models/message-data.model'
 
 /** CSS */
-import './css/iframe.css';
-import './css/LoadingSpinner.css';
+import './css/iframe.css'
+import './css/LoadingSpinner.css'
 
-type Props = {
-  checkoutId?: string,
-  chargeId?: string,
-  customMetadata?: string,
-  onLoad?: () => void,
-  onChargeSuccess?: (data: MessageData) => void,
-  onChargeFailure?: (data: MessageData) => void,
-  onPaymentDetected?: (data: MessageData) => void,
-  onError: (data: MessageData) => void,
-  onModalClose: () => void,
-  disableCaching?: boolean,
-};
+interface Props {
+  checkoutId?: string
+  chargeId?: string
+  customMetadata?: string
+  onLoad?: () => void
+  onChargeSuccess?: (data: MessageData) => void
+  onChargeFailure?: (data: MessageData) => void
+  onPaymentDetected?: (data: MessageData) => void
+  onError: (data: MessageData) => void
+  onModalClose: () => void
+  disableCaching: boolean
+}
 
-type State = {
-  loading: boolean,
-  src: null | string,
-};
+interface State {
+  loading: boolean
+  src: null | string
+}
 
-type SrcParams = {
-  origin: string,
-  buttonId: string,
-  custom?: string,
-  cacheDisabled: boolean,
-};
+interface SrcParams {
+  origin: string
+  buttonId: string
+  custom?: string
+  cacheDisabled: boolean
+}
 
 type IframeMessageData = {
-  buttonId?: string;
-} & MessageData;
+  buttonId?: string
+} & MessageData
 
 export class Iframe extends Component<Props, State> {
-  private readonly origin = 'https://commerce.coinbase.com';
-  private readonly uuid: string;
-  private readonly listenerHandleMessage: (msg: { origin: string, data: IframeMessageData }) => void;
+  private readonly origin = 'https://commerce.coinbase.com'
+  private readonly uuid: string
+  private readonly listenerHandleMessage: (msg: { origin: string, data: IframeMessageData }) => void
 
-  constructor(props: Props) {
-    super(props);
+  constructor (props: Props) {
+    super(props)
 
-    this.uuid = this.generateUUID();
-    this.listenerHandleMessage = (msg: { origin: string, data: IframeMessageData }) => this.handleMessage(msg);
+    this.uuid = this.generateUUID()
+    this.listenerHandleMessage = (msg: { origin: string, data: IframeMessageData }) => { this.handleMessage(msg) }
     this.state = {
       loading: true,
       src: null
     }
   }
 
-  componentDidMount(){
+  componentDidMount (): void {
     // Add event listeners for the iframe
-    window.addEventListener('message', this.listenerHandleMessage);
+    window.addEventListener('message', this.listenerHandleMessage)
 
-    const { hostname, port, protocol } =  window.location;
-    const hostName = `${protocol}//${hostname}${port ? `:${port}` : ''}/`;
+    const { hostname, port, protocol } = window.location
+    const hostName = `${protocol}//${hostname}${port ? `:${port}` : ''}/`
 
-    this.setState({ src: this.buildSrc(hostName) });
+    this.setState({ src: this.buildSrc(hostName) })
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('message', this.listenerHandleMessage);
+  componentWillUnmount (): void {
+    window.removeEventListener('message', this.listenerHandleMessage)
   }
 
-  render() {
-    const { loading, src } = this.state;
+  render (): JSX.Element {
+    const { loading, src } = this.state
 
     return (
       <div className="coinbase-commerce-iframe-container">
-        {loading || src === null && (
+        {(loading || src === null) && (
           <div className="commerce-loading-spinner"/>
         )}
         {src !== null && (
           <iframe
-            onLoad={() => this.handleIFrameLoaded()}
+            onLoad={() => { this.handleIFrameLoaded() }}
             className="coinbase-commerce-iframe"
             src={src}
             style={{ border: 0 }}
@@ -87,62 +87,51 @@ export class Iframe extends Component<Props, State> {
     )
   }
 
-  private generateUUID(): string {
+  private generateUUID (): string {
     // Source: https://stackoverflow.com/a/2117523
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
       /[xy]/g,
       (c: string) => {
-        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8)
 
-        return v.toString(16);
-      },
-    );
+        return v.toString(16)
+      }
+    )
   }
 
-  private buildSrc(hostName: string): string {
-    const {checkoutId, chargeId, customMetadata, disableCaching} = this.props;
+  private buildSrc (hostName: string): string {
+    const { checkoutId, chargeId, customMetadata, disableCaching } = this.props
 
-    function encodeURIParams(params: { [key: string]: string }) {
-      return Object.keys(params)
-        .map((key: string) => `${window.encodeURIComponent(key)}=${window.encodeURIComponent(params[key])}`)
-        .join('&');
-    }
-
-    let widgetType: string;
-    let id: string;
+    let widgetType: string
+    let id: string
 
     if (checkoutId) {
-      id = checkoutId;
-      widgetType = 'checkout';
+      id = checkoutId
+      widgetType = 'checkout'
     } else if (chargeId) {
-      id = chargeId;
-      widgetType = 'charges';
+      id = chargeId
+      widgetType = 'charges'
     } else {
-      throw new Error('must supply either checkoutId or chargeId prop');
+      throw new Error('must supply either checkoutId or chargeId prop')
     }
 
     const params: SrcParams = {
       origin: hostName,
       buttonId: this.uuid,
-      cacheDisabled: !!disableCaching
-    };
-
-    let custom = '';
-    if (customMetadata && typeof customMetadata !== 'string') {
-      console.error('Received customMetadata not of "string" type. Ignoring.');
-    } else if (customMetadata) {
-      custom = customMetadata
+      cacheDisabled: disableCaching
     }
 
-    if (custom) {
-      params.custom = custom
+    if (typeof customMetadata !== 'string') {
+      console.error('Received customMetadata not of "string" type. Ignoring.')
+    } else {
+      params.custom = customMetadata
     }
 
     const encodedParams = Object.keys(params)
       .map((key: string) => `${window.encodeURIComponent(key)}=${window.encodeURIComponent((params as any)[key])}`)
-      .join('&');
+      .join('&')
 
-    return `${this.origin}/embed/${widgetType}/${encodeURI(id)}?${encodedParams}`;
+    return `${this.origin}/embed/${widgetType}/${encodeURI(id)}?${encodedParams}`
   }
 
   /*
@@ -150,13 +139,13 @@ export class Iframe extends Component<Props, State> {
    * matches the ID we generated in our constructor, we can assume this message is valid and meant
    * for us to action.
    */
-  private isValidMessage(msg: { origin: string, data: IframeMessageData }): boolean {
-    return msg.origin === this.origin && msg.data.buttonId === this.uuid;
+  private isValidMessage (msg: { origin: string, data: IframeMessageData }): boolean {
+    return msg.origin === this.origin && msg.data.buttonId === this.uuid
   }
 
-  private handleMessage(msg: { origin: string, data: IframeMessageData }) {
+  private handleMessage (msg: { origin: string, data: IframeMessageData }): void {
     if (!this.isValidMessage(msg)) {
-      return;
+      return
     }
 
     const {
@@ -164,31 +153,32 @@ export class Iframe extends Component<Props, State> {
       onChargeFailure,
       onModalClose,
       onError,
-      onPaymentDetected,
-    } = this.props;
+      onPaymentDetected
+    } = this.props
 
     switch (msg.data.event) {
       case 'charge_confirmed':
-        onChargeSuccess && onChargeSuccess(msg.data);
-        break;
+        onChargeSuccess?.(msg.data)
+        break
       case 'charge_failed':
-        onChargeFailure && onChargeFailure(msg.data);
-        break;
+        onChargeFailure?.(msg.data)
+        break
       case 'payment_detected':
-        onPaymentDetected && onPaymentDetected(msg.data);
-        break;
+        onPaymentDetected?.(msg.data)
+        break
       case 'error_not_found':
-        onError(msg.data);
-        break;
+        onError(msg.data)
+        break
       case 'checkout_modal_closed':
-        onModalClose();
+        onModalClose()
+        break
       default:
-        break;
+        break
     }
   }
 
-  private handleIFrameLoaded() {
-    this.setState({ loading: false });
-    this.props.onLoad && this.props.onLoad();
+  private handleIFrameLoaded (): void {
+    this.setState({ loading: false })
+    this.props.onLoad?.()
   }
 }

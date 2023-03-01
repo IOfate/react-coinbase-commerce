@@ -1,19 +1,19 @@
-import { Network } from './network.model';
+import { type Network } from './network.model'
 
-type PaymentStatus = 'NEW' | 'PENDING' | 'CONFIRMED' | 'FAILED';
+type PaymentStatus = 'NEW' | 'PENDING' | 'CONFIRMED' | 'FAILED'
 
 export interface Payment {
-  network: Network;
-  transactionId: string,
-  status: PaymentStatus,
+  network: Network
+  transactionId: string
+  status: PaymentStatus
   value: {
-    crypto: { amount: string; currency: string; };
-    local: { amount: string; currency: string; };
-  },
+    crypto: { amount: string, currency: string }
+    local: { amount: string, currency: string }
+  }
   block: {
-    height?: number,
-    hash?: string,
-    confirmations: number,
-    confirmationsRequired: number,
-  },
+    height?: number
+    hash?: string
+    confirmations: number
+    confirmationsRequired: number
+  }
 }

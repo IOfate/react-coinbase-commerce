@@ -3,4 +3,4 @@ export type Network =
   | 'bitcoincash'
   | 'ethereum'
   | 'litecoin'
-  | 'dogecoin';
+  | 'dogecoin'

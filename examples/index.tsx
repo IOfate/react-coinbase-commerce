@@ -1,41 +1,42 @@
-import React, { Component, Fragment } from 'react';
-import { createRoot } from 'react-dom/client';
-import { CoinbaseCommerceButton } from '../src/index';
+import React, { Component } from 'react'
+import { createRoot } from 'react-dom/client'
+import { CoinbaseCommerceButton } from '../src/index'
 
-type State = {
-  checkoutId: string,
-  chargeId: string,
+interface State {
+  checkoutId: string
+  chargeId: string
 }
 
 class App extends Component<unknown, State> {
-  constructor(props: unknown){
-    super(props);
+  constructor (props: unknown) {
+    super(props)
 
     this.state = {
       checkoutId: '',
       chargeId: ''
-    };
-    this.updateCheckoutId = this.updateCheckoutId.bind(this);
-    this.updateChargeId = this.updateChargeId.bind(this);
+    }
+    this.updateCheckoutId = this.updateCheckoutId.bind(this)
+    this.updateChargeId = this.updateChargeId.bind(this)
   }
 
-  updateCheckoutId(e: any){
-    this.setState({checkoutId: e.target.value})
+  updateCheckoutId (e: any): void {
+    this.setState({ checkoutId: e.target.value })
   }
 
-  updateChargeId(e: any){
-    this.setState({chargeId: e.target.value})
+  updateChargeId (e: any): void {
+    this.setState({ chargeId: e.target.value })
   }
 
-  render() {
-    const { checkoutId, chargeId } = this.state;
+  render (): JSX.Element {
+    const { checkoutId, chargeId } = this.state
 
     return (
       <div>
         <span>Enter a checkout ID: </span>
         <input type="text" onChange={this.updateCheckoutId} />
         <br/>
-        {checkoutId.length ? (
+        {checkoutId.length > 0
+          ? (
           <div>
             <CoinbaseCommerceButton styled checkoutId={checkoutId} />
             <CoinbaseCommerceButton styled disabled>Disabled Button</CoinbaseCommerceButton>
@@ -48,30 +49,33 @@ class App extends Component<unknown, State> {
                 borderColor: 'green',
                 borderRadius: 4,
                 height: 45,
-                cursor: 'pointer',
+                cursor: 'pointer'
               }}
               checkoutId={checkoutId}
             >
               Custom Styles Button
             </CoinbaseCommerceButton>
           </div>
-        ) : null}
+            )
+          : null}
 
         <span>Enter a charge ID: </span>
         <input type="text" onChange={this.updateChargeId} />
         <br/>
-        {chargeId.length ? (
+        {chargeId.length > 0
+          ? (
           <div>
             <CoinbaseCommerceButton styled chargeId={chargeId}/>
             <CoinbaseCommerceButton styled disabled>Disabled Button</CoinbaseCommerceButton>
             <CoinbaseCommerceButton chargeId={chargeId}>Ugly Button With Crypto</CoinbaseCommerceButton>
           </div>
-        ) : null}
+            )
+          : null}
       </div>
-  )
+    )
   }
 }
 
-const root = createRoot(document.getElementById('root') as Element);
+const root = createRoot(document.getElementById('root') as Element)
 
-root.render(<App/>);
+root.render(<App/>)
