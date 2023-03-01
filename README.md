@@ -1,5 +1,7 @@
 # React Coinbase Commerce
 
+[![Node.js CI](https://github.com/IOfate/react-coinbase-commerce/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/IOfate/react-coinbase-commerce/actions/workflows/node.js.yml)
+
 A totally rewritten version of https://github.com/coinbase/react-coinbase-commerce in Typescript maintained by IOfate.
 
 A button to embed a Coinbase Commerce checkout or charge directly into your React application.
