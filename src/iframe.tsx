@@ -121,7 +121,7 @@ export class Iframe extends Component<Props, State> {
       cacheDisabled: disableCaching
     }
 
-    if (typeof customMetadata !== 'string') {
+    if (customMetadata && typeof customMetadata !== 'string') {
       console.error('Received customMetadata not of "string" type. Ignoring.')
     } else {
       params.custom = customMetadata
