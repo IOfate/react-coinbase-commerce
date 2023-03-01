@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CoinbaseCommerceButton } from '../src/index';
-import '../dist/esm/index.css';
 
 type State = {
   checkoutId: string,
@@ -28,46 +27,48 @@ class App extends Component<unknown, State> {
     this.setState({chargeId: e.target.value})
   }
 
-  render(){
-    return (
-      <Fragment>
-        <div>
-          <span>Enter a checkout ID: </span>
-          <input type='text' onChange={this.updateCheckoutId}/><br/>
-          {this.state.checkoutId.length > 0 ? (
-            <div>
-              <CoinbaseCommerceButton styled={true} checkoutId={this.state.checkoutId} />
-              <CoinbaseCommerceButton styled={true} disabled>Disabled Button</CoinbaseCommerceButton>
-              <CoinbaseCommerceButton checkoutId={this.state.checkoutId}>Ugly Button With Crypto</CoinbaseCommerceButton>
-              <CoinbaseCommerceButton
-                wrapperStyle={{ width: '100%' }}
-                style={{
-                  width: '100%',
-                  color: 'green',
-                  borderColor: 'green',
-                  borderRadius: 4,
-                  height: 45,
-                  cursor: 'pointer',
-                }}
-                checkoutId={this.state.checkoutId}
-              >
-                Custom Styles Button
-              </CoinbaseCommerceButton>
-            </div>
-          ) : null}
+  render() {
+    const { checkoutId, chargeId } = this.state;
 
-          <span>Enter a charge ID: </span>
-          <input type='text' onChange={this.updateChargeId}/><br/>
-          {this.state.chargeId.length > 0 ? (
-            <div>
-              <CoinbaseCommerceButton styled={true} chargeId={this.state.chargeId}/>
-              <CoinbaseCommerceButton styled={true} disabled>Disabled Button</CoinbaseCommerceButton>
-              <CoinbaseCommerceButton chargeId={this.state.chargeId}>Ugly Button With Crypto</CoinbaseCommerceButton>
-            </div>
-          ) : null}
-        </div>
-      </Fragment>
-      )
+    return (
+      <div>
+        <span>Enter a checkout ID: </span>
+        <input type="text" onChange={this.updateCheckoutId} />
+        <br/>
+        {checkoutId.length ? (
+          <div>
+            <CoinbaseCommerceButton styled checkoutId={checkoutId} />
+            <CoinbaseCommerceButton styled disabled>Disabled Button</CoinbaseCommerceButton>
+            <CoinbaseCommerceButton checkoutId={checkoutId}>Ugly Button With Crypto</CoinbaseCommerceButton>
+            <CoinbaseCommerceButton
+              wrapperStyle={{ width: '100%' }}
+              style={{
+                width: '100%',
+                color: 'green',
+                borderColor: 'green',
+                borderRadius: 4,
+                height: 45,
+                cursor: 'pointer',
+              }}
+              checkoutId={checkoutId}
+            >
+              Custom Styles Button
+            </CoinbaseCommerceButton>
+          </div>
+        ) : null}
+
+        <span>Enter a charge ID: </span>
+        <input type="text" onChange={this.updateChargeId} />
+        <br/>
+        {chargeId.length ? (
+          <div>
+            <CoinbaseCommerceButton styled chargeId={chargeId}/>
+            <CoinbaseCommerceButton styled disabled>Disabled Button</CoinbaseCommerceButton>
+            <CoinbaseCommerceButton chargeId={chargeId}>Ugly Button With Crypto</CoinbaseCommerceButton>
+          </div>
+        ) : null}
+      </div>
+  )
   }
 }
 

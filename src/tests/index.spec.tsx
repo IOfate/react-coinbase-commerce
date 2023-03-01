@@ -6,24 +6,6 @@ import { render } from '@testing-library/react';
 import { CoinbaseCommerceButton } from '../index';
 
 describe('CoinbaseCommerceButton', () => {
-  const originalError = console.error;
-
-  beforeAll(() => {
-    console.error = (args: any[]) => {
-      // Suppress: Warning: Received `false` for a non-boolean attribute `styled`.
-      // Which can be a false warning
-      if (args.indexOf('for a non-boolean attribute') > -1) {
-        return
-      }
-
-      originalError(args)
-    }
-  });
-
-  afterAll(() => {
-    console.error = originalError;
-  });
-
   it('should render a button on init', () => {
     const { container } = render(
       <CoinbaseCommerceButton />

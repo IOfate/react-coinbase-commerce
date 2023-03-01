@@ -70,7 +70,8 @@ export class CoinbaseCommerceButton extends Component<Props & ButtonHTMLAttribut
       'checkoutId',
       'chargeId',
       'disableCaching',
-      'wrapperStyle'
+      'wrapperStyle',
+      'styled',
     ];
 
     return Object.keys({ ...this.props })

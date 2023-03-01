@@ -10,7 +10,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "example": "rollup -c rollup.example.config.js",
+    "examples": "rollup -c rollup.example.config.js",
     "typecheck": "tsc --noEmit",
     "test": "npm run test:unit && npm run build",
     "test:unit": "jest"
