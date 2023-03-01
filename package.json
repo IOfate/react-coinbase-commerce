@@ -9,7 +9,7 @@
   ],
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
+    "build": "rollup -c rollup.config.js",
     "examples": "rollup -c rollup.example.config.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/**/*.{js,jsx,mjs,cjs,ts,tsx}",
