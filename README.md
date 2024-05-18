@@ -18,7 +18,7 @@ npm i -S @iofate/react-coinbase-commerce
 ## Usage
 ```jsx
 import { CoinbaseCommerceButton } from '@iofate/react-coinbase-commerce';
-import '@iofate/react-coinbase-commerce/esm/index.css';
+import '@iofate/react-coinbase-commerce/dist/esm/index.css';
 
 const App = () => {
   return (
